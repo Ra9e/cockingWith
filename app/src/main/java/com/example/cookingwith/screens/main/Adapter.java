@@ -125,7 +125,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ItemViewHolder> {
             this.item = item;
 
             itemText.setText(item.text);
-            itemNumber.setText(item.quantity);
+            itemNumber.setText(String.valueOf(item.quantity));
         }
     }
 }
