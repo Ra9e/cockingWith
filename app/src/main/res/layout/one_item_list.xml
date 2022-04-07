@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/itemText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:minHeight="64dp"
+        android:gravity="center_vertical"
+        tools:text="some text for testing view"
+        android:textStyle="bold"
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/itemNumber"
+        android:layout_width="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        tools:text="10"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:layout_height="wrap_content" />
+
+    <!-- можно сделать чекбокс для выбора определнных продуктов -->
+
+    <ImageView
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        android:contentDescription="@string/image_delete_item" />
+
+</LinearLayout>
