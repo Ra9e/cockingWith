@@ -1,10 +1,12 @@
 package com.example.cookingwith.screens.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
+import android.widget.Button;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cookingwith.R;
 import com.example.cookingwith.databinding.ActivityMainBinding;
+import com.example.cookingwith.dishes.DishActivity;
 import com.example.cookingwith.model.Item;
 import com.example.cookingwith.screens.details.ItemDetailsActivity;
 
@@ -47,6 +50,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ItemDetailsActivity.start(MainActivity.this, null);
+            }
+        });
+
+        Button btnToSecondAct = (Button) findViewById(R.id.fab2);
+// 441504000000
+        btnToSecondAct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, DishActivity.class);
+                startActivity(intent);
             }
         });
 

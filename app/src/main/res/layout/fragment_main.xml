@@ -7,10 +7,12 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
+        android:id="@+id/food_list"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginBottom="76dp" />
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginBottom="76dp"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
