@@ -1,6 +1,7 @@
 package com.example.cookingwith.dishes;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,9 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.cookingwith.R;
 import com.example.cookingwith.model.DishModel;
+import com.example.cookingwith.screens.main.MainActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -50,8 +54,17 @@ public class MainFragment extends Fragment implements DishRvAdapter.ItemClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=  inflater.inflate(R.layout.fragment_main, container, false);
+        View view =  inflater.inflate(R.layout.fragment_main, container, false);
 
+        FloatingActionButton btnToBackAct = view.findViewById(R.id.fabBtn);
+
+        btnToBackAct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
         buildListData();
         initRecyclerView(view);
         return view;

@@ -25,16 +25,6 @@ public class DishActivity extends AppCompatActivity {
 
         setTitle("Время еды!");
 
-        Button btnToBackAct = (Button) findViewById(R.id.fabBtn);
-
-        btnToBackAct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DishActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
         Fragment fragment  = MainFragment.newInstance();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

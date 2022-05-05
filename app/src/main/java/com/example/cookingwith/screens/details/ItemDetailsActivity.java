@@ -52,8 +52,8 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
         if (getIntent().hasExtra(EXTRA_ITEM)) {
             item = getIntent().getParcelableExtra(EXTRA_ITEM);
-            editText.setText(item.text);
-            editNumber.setText(item.quantity);
+            editText.setText(String.valueOf(item.text));
+            editNumber.setText(String.valueOf(item.quantity));
         } else {
             item = new Item();
         }

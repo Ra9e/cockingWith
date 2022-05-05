@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -17,7 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cookingwith.R;
 import com.example.cookingwith.databinding.ActivityMainBinding;
+import com.example.cookingwith.dishes.DetailFragment;
 import com.example.cookingwith.dishes.DishActivity;
+import com.example.cookingwith.model.DishModel;
 import com.example.cookingwith.model.Item;
 import com.example.cookingwith.screens.details.ItemDetailsActivity;
 
