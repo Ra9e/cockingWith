@@ -10,19 +10,16 @@
     </array>
 
     <string-array name="names">
-        <item>Labrador</item>
-        <item>Malamute</item>
-        <item>Siberian Husky</item>
-        <item>Pomeranian</item>
-        <item>Redbone</item>
-        <item>Rottweiler</item>
-        <item>Belgian Sheepdog</item>
-        <item>Welsh Springer</item>
+        <item>Оладьи</item>
+        <item>Гренки</item>
+        <item>Яичница</item>
+        <item>Котлеты</item>
+        <item>Суп</item>
+        <item>Тефтели</item>
     </string-array>
 
     <string-array name="descriptions">
-    <item>The sweet-faced, lovable Labrador Retriever is America’s most popular dog breed. Labs are
-      friendly, outgoing, and high-spirited companions.</item>
+    <item>Очень вкусные и нежные оладьи на кефире. Настоятельно рекомендую пышные кефирные оладьи на завтрак.</item>
         <item>An immensely strong, heavy-duty worker of spitz type, the Alaskan Malamute is an
       affectionate, loyal, and playful but dignified dog recognizable by his well-furred plumed
       tail carried over the back, erect ears, and substantial bone.</item>
@@ -45,8 +42,12 @@
       anywhere. The Welshie is among Britain\'s oldest sporting breeds.</item>
     </string-array>
 
+    <string-array name="ingredients">
+
+    </string-array>
+
     <string-array name="urls">
-        <item>https://www.akc.org/dog-breeds/labrador-retriever/</item>
+        <item>https://www.russianfood.com/recipes/recipe.php?rid=124912</item>
         <item>https://www.akc.org/dog-breeds/alaskan-malamute/</item>
         <item>https://www.akc.org/dog-breeds/siberian-husky/</item>
         <item>https://www.akc.org/dog-breeds/pomeranian/</item>

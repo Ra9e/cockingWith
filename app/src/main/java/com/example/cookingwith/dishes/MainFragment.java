@@ -1,7 +1,8 @@
 package com.example.cookingwith.dishes;
 
-
 import android.content.Intent;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,7 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.Spinner;
 
 import com.example.cookingwith.R;
 import com.example.cookingwith.model.DishModel;
@@ -21,23 +25,19 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MainFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class MainFragment extends Fragment implements DishRvAdapter.ItemClickListener {
     private ArrayList<DishModel> list = new ArrayList<>();
+    private CheckBox showCheckbox;
+    private FloatingActionButton btnToBackAct;
+    private String[] spinList = {"potato","apple","meat"};
+
+    DishRvAdapter adapter;
+
     public MainFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     * @return A new instance of fragment MainFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
         return fragment;
@@ -54,9 +54,16 @@ public class MainFragment extends Fragment implements DishRvAdapter.ItemClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View view =  inflater.inflate(R.layout.fragment_main, container, false);
 
-        FloatingActionButton btnToBackAct = view.findViewById(R.id.fabBtn);
+        ArrayAdapter<String> spinListAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinList);
+        spinListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner spinFood = (Spinner) view.findViewById(R.id.spinner);
+        spinFood.setAdapter(spinListAdapter);
+        
+        showCheckbox = view.findViewById(R.id.show_checkbox);
+        btnToBackAct = view.findViewById(R.id.fabBtn);
 
         btnToBackAct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +72,23 @@ public class MainFragment extends Fragment implements DishRvAdapter.ItemClickLis
                 startActivity(intent);
             }
         });
+
+        showCheckbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (showCheckbox.isChecked()) {
+                    list.clear();
+                    buildListData();
+                    adapter.notifyDataSetChanged();
+                }
+                else {
+                    list.clear();
+
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+
         buildListData();
         initRecyclerView(view);
         return view;
@@ -75,17 +99,17 @@ public class MainFragment extends Fragment implements DishRvAdapter.ItemClickLis
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
 
         recyclerView.setLayoutManager(layoutManager);
-        DishRvAdapter adapter = new DishRvAdapter(list, this);
+        adapter = new DishRvAdapter(list, this);
         recyclerView.setAdapter(adapter);
     }
 
     private void buildListData() {
-        list.add(new DishModel("Avengers", "description1", R.drawable.oladii));
-        list.add(new DishModel("Black Panther", "description2", R.drawable.grenki));
-        list.add(new DishModel("Titanic", "description3", R.drawable.kotleti));
-        list.add(new DishModel("The Lion King", "description4", R.drawable.sup));
-        list.add(new DishModel("Star Wars", "description5", R.drawable.yaichnia));
-        list.add(new DishModel("Jurassic World", "description6", R.drawable.tefteli));
+        list.add(new DishModel("Оладьи", "Очень вкусные и нежные оладьи на кефире.", R.drawable.oladii));
+        list.add(new DishModel("Гренки", "description2", R.drawable.grenki));
+        list.add(new DishModel("Котлеты", "description3", R.drawable.kotleti));
+        list.add(new DishModel("Суп", "description4", R.drawable.sup));
+        list.add(new DishModel("Яичница", "description5", R.drawable.yaichnia));
+        list.add(new DishModel("Тефтели", "description6", R.drawable.tefteli));
     }
 
     @Override
