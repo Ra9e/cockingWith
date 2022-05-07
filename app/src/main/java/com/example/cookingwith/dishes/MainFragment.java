@@ -13,24 +13,35 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.cookingwith.R;
 import com.example.cookingwith.model.DishModel;
 import com.example.cookingwith.screens.main.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
+import java.util.*;
 
 
 public class MainFragment extends Fragment implements DishRvAdapter.ItemClickListener {
     private ArrayList<DishModel> list = new ArrayList<>();
     private CheckBox showCheckbox;
     private FloatingActionButton btnToBackAct;
-    private String[] spinList = {"potato","apple","meat"};
+    private String[] spinList = {"Potato", "Eggs", "Meat"};
+    private static final HashMap<String,DishModel> foodHash = new HashMap<String,DishModel>() {{
+        put("Potato1", new DishModel("Суп", "description4", R.drawable.sup));
+        put("Eggs1",   new DishModel("Оладьи", "Очень вкусные и нежные оладьи на кефире.", R.drawable.oladii));
+        put("Eggs2",   new DishModel("Гренки", "description2", R.drawable.grenki));
+        put("Eggs3",   new DishModel("Яичница", "description5", R.drawable.yaichnia));
+        put("Meat1",   new DishModel("Котлеты", "description3", R.drawable.kotleti));
+        put("Meat2",   new DishModel("Тефтели", "description6", R.drawable.tefteli));
+    }};
+
 
     DishRvAdapter adapter;
 
@@ -78,18 +89,32 @@ public class MainFragment extends Fragment implements DishRvAdapter.ItemClickLis
             public void onClick(View v) {
                 if (showCheckbox.isChecked()) {
                     list.clear();
-                    buildListData();
+                    buildAllListData();
                     adapter.notifyDataSetChanged();
                 }
                 else {
                     list.clear();
-
                     adapter.notifyDataSetChanged();
                 }
             }
         });
 
-        buildListData();
+
+        spinFood.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                setCheckboxUnchecked();
+                buildSortedListData(parent.getSelectedItem().toString());
+                Toast.makeText(getContext(), parent.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+
+        buildAllListData();
         initRecyclerView(view);
         return view;
     }
@@ -103,13 +128,26 @@ public class MainFragment extends Fragment implements DishRvAdapter.ItemClickLis
         recyclerView.setAdapter(adapter);
     }
 
-    private void buildListData() {
-        list.add(new DishModel("Оладьи", "Очень вкусные и нежные оладьи на кефире.", R.drawable.oladii));
-        list.add(new DishModel("Гренки", "description2", R.drawable.grenki));
-        list.add(new DishModel("Котлеты", "description3", R.drawable.kotleti));
-        list.add(new DishModel("Суп", "description4", R.drawable.sup));
-        list.add(new DishModel("Яичница", "description5", R.drawable.yaichnia));
-        list.add(new DishModel("Тефтели", "description6", R.drawable.tefteli));
+    private void buildAllListData() {
+        for (Map.Entry<String, DishModel> entry: foodHash.entrySet()) {
+            list.add(entry.getValue());
+        }
+    }
+    private void buildSortedListData(String food) {
+        for (Map.Entry<String, DishModel> entry: foodHash.entrySet()) {
+            String key = entry.getKey().replaceAll("\\d", "");
+            System.out.println(key + " / " + (food) + " / " + key.equals(food));
+            if (key.equals(food)) {
+                list.add(entry.getValue());
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    private void setCheckboxUnchecked() {
+        showCheckbox.setChecked(false);
+        list.clear();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
