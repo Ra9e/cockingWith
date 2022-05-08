@@ -30,16 +30,17 @@ import java.util.*;
 
 public class MainFragment extends Fragment implements DishRvAdapter.ItemClickListener {
     private ArrayList<DishModel> list = new ArrayList<>();
-    private CheckBox showCheckbox;
     private FloatingActionButton btnToBackAct;
-    private String[] spinList = {"Potato", "Eggs", "Meat"};
+    private String[] spinList = {"All", "Potato", "Eggs", "Meat"};
     private static final HashMap<String,DishModel> foodHash = new HashMap<String,DishModel>() {{
-        put("Potato1", new DishModel("Суп", "description4", R.drawable.sup));
-        put("Eggs1",   new DishModel("Оладьи", "Очень вкусные и нежные оладьи на кефире.", R.drawable.oladii));
-        put("Eggs2",   new DishModel("Гренки", "description2", R.drawable.grenki));
-        put("Eggs3",   new DishModel("Яичница", "description5", R.drawable.yaichnia));
-        put("Meat1",   new DishModel("Котлеты", "description3", R.drawable.kotleti));
-        put("Meat2",   new DishModel("Тефтели", "description6", R.drawable.tefteli));
+        put("Potato1", new DishModel("Суп", "Томатный суп с гречневой крупой и курицей ароматный и острый.", R.drawable.sup, "https://www.russianfood.com/recipes/recipe.php?rid=166852"));
+        put("Eggs1",   new DishModel("Оладьи", "Очень вкусные и нежные оладьи на кефире.", R.drawable.oladii, "https://www.russianfood.com/recipes/recipe.php?rid=124912"));
+        put("Eggs2",   new DishModel("Гренки", "Максимально простой завтрак, готовится за несколько минут", R.drawable.grenki, "https://www.russianfood.com/recipes/recipe.php?rid=146319"));
+        put("Eggs3",   new DishModel("Яичница", "Простой набор \"творог, яйца и лаваш\" можно превратить в живописнейший завтрак", R.drawable.yaichnia, "https://www.russianfood.com/recipes/recipe.php?rid=166283"));
+        put("Meat1",   new DishModel("Котлеты", "Котлеты из рубленой свинины с добавлением лука, сыра и майонеза", R.drawable.kotleti, "https://www.russianfood.com/recipes/recipe.php?rid=166818"));
+        put("Meat2",   new DishModel("Тефтели", "Тефтели из фарша, с тушеным картофелем, с грибами и томатной пастой", R.drawable.tefteli, "https://www.russianfood.com/recipes/recipe.php?rid=166801"));
+        put("Potato2", new DishModel("Тефтели", "Тефтели из фарша, с тушеным картофелем, с грибами и томатной пастой", R.drawable.tefteli, "https://www.russianfood.com/recipes/recipe.php?rid=166801"));
+        put("Meat3",   new DishModel("Суп", "Томатный суп с гречневой крупой и курицей ароматный и острый.", R.drawable.sup, "https://www.russianfood.com/recipes/recipe.php?rid=166852"));
     }};
 
 
@@ -73,7 +74,7 @@ public class MainFragment extends Fragment implements DishRvAdapter.ItemClickLis
         Spinner spinFood = (Spinner) view.findViewById(R.id.spinner);
         spinFood.setAdapter(spinListAdapter);
         
-        showCheckbox = view.findViewById(R.id.show_checkbox);
+
         btnToBackAct = view.findViewById(R.id.fabBtn);
 
         btnToBackAct.setOnClickListener(new View.OnClickListener() {
@@ -84,27 +85,17 @@ public class MainFragment extends Fragment implements DishRvAdapter.ItemClickLis
             }
         });
 
-        showCheckbox.setOnClickListener(new View.OnClickListener() {
+        spinFood.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                if (showCheckbox.isChecked()) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (parent.getSelectedItem().toString().equals("All")) {
                     list.clear();
                     buildAllListData();
                     adapter.notifyDataSetChanged();
                 }
                 else {
-                    list.clear();
-                    adapter.notifyDataSetChanged();
+                    buildSortedListData(parent.getSelectedItem().toString());
                 }
-            }
-        });
-
-
-        spinFood.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                setCheckboxUnchecked();
-                buildSortedListData(parent.getSelectedItem().toString());
                 Toast.makeText(getContext(), parent.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
             }
 
@@ -130,13 +121,23 @@ public class MainFragment extends Fragment implements DishRvAdapter.ItemClickLis
 
     private void buildAllListData() {
         for (Map.Entry<String, DishModel> entry: foodHash.entrySet()) {
-            list.add(entry.getValue());
+            if (!hasObject(entry.getValue()))
+                list.add(entry.getValue());
         }
     }
+
+    private boolean hasObject(DishModel entry) {
+        for (Object dish: list ) {
+            if (dish.equals(entry))
+                return true;
+        }
+        return false;
+    }
+
     private void buildSortedListData(String food) {
+        list.clear();
         for (Map.Entry<String, DishModel> entry: foodHash.entrySet()) {
             String key = entry.getKey().replaceAll("\\d", "");
-            System.out.println(key + " / " + (food) + " / " + key.equals(food));
             if (key.equals(food)) {
                 list.add(entry.getValue());
             }
@@ -144,19 +145,12 @@ public class MainFragment extends Fragment implements DishRvAdapter.ItemClickLis
         adapter.notifyDataSetChanged();
     }
 
-    private void setCheckboxUnchecked() {
-        showCheckbox.setChecked(false);
-        list.clear();
-        adapter.notifyDataSetChanged();
-    }
-
     @Override
     public void onItemClick(DishModel dataModel) {
-        Fragment fragment = DetailFragment.newInstance(dataModel.getTitle(), dataModel.getDescription());
+        Fragment fragment = DetailFragment.newInstance(dataModel.getDishUrl());
 
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        // transaction.replace(R.id.frame_container, fragment, "detail_fragment");
 
         transaction.hide(getActivity().getSupportFragmentManager().findFragmentByTag("main_fragment"));
         transaction.add(R.id.frame_container, fragment);
