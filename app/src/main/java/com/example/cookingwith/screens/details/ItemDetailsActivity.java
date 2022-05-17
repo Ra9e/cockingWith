@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -20,11 +22,14 @@ import com.example.cookingwith.model.Item;
 public class ItemDetailsActivity extends AppCompatActivity {
 
     private static final String EXTRA_ITEM = "ItemDetailsActivity.EXTRA_ITEM";
+    private String[] spinList = {"Potato", "Eggs", "Meat"};
 
     private Item item;
 
     private EditText editText;
     private EditText editNumber;
+    private ArrayAdapter<String> spinListAdapter;
+    private Spinner spinFood;
 
     public static void start(Activity caller, Item item) {
         Intent intent = new Intent(caller, ItemDetailsActivity.class);
@@ -50,10 +55,16 @@ public class ItemDetailsActivity extends AppCompatActivity {
         editText = findViewById(R.id.textEdit);
         editNumber = findViewById(R.id.numberEdit);
 
+        spinListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinList);
+        spinListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinFood = (Spinner) findViewById(R.id.spinner);
+        spinFood.setAdapter(spinListAdapter);
+
         if (getIntent().hasExtra(EXTRA_ITEM)) {
             item = getIntent().getParcelableExtra(EXTRA_ITEM);
             editText.setText(String.valueOf(item.text));
             editNumber.setText(String.valueOf(item.quantity));
+            spinFood.setSelection(0);
         } else {
             item = new Item();
         }
@@ -76,6 +87,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
                 if (editText.getText().length() > 0 && editNumber.getText().length() > 0) {
                     item.text = editText.getText().toString();
                     item.quantity = Integer.parseInt(String.valueOf(editNumber.getText()));
+                    item.dishType = spinFood.getSelectedItem().toString();
                     item.timestamp = System.currentTimeMillis();
 
                     if(getIntent().hasExtra(EXTRA_ITEM)) { // проверяем был ли у нас такой объект, если был, то обновляем его

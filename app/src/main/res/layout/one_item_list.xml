@@ -19,6 +19,15 @@
         android:textStyle="bold"
         android:textSize="20sp" />
     <TextView
+        android:id="@+id/dishType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:minHeight="24dp"
+        android:gravity="center_vertical"
+        tools:text="type"
+        android:textSize="24sp" />
+    <TextView
         android:id="@+id/itemNumber"
         android:layout_width="wrap_content"
         android:paddingLeft="16dp"

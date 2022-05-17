@@ -27,6 +27,7 @@ public class App extends Application {
         database = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "app-db-food")
                 .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
                 .build();
 
         itemDao = database.itemDAO();

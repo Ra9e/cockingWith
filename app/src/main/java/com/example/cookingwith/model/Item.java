@@ -24,6 +24,9 @@ public class Item implements Parcelable {
     @ColumnInfo(name = "quantity")
     public int quantity;
 
+    @ColumnInfo(name = "type")
+    public String dishType;
+
     public Item() {
     }
 
@@ -40,7 +43,7 @@ public class Item implements Parcelable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(uid, text, timestamp, quantity);
+        return Objects.hash(uid, text, timestamp, quantity, dishType);
     }
 
     protected Item(Parcel in) {
@@ -48,6 +51,7 @@ public class Item implements Parcelable {
         text = in.readString();
         timestamp = in.readLong();
         quantity = in.readInt();
+        dishType = in.readString();
     }
 
     @Override
@@ -56,6 +60,7 @@ public class Item implements Parcelable {
         dest.writeString(text);
         dest.writeLong(timestamp);
         dest.writeInt(quantity);
+        dest.writeString(dishType);
     }
 
     @Override

@@ -94,6 +94,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ItemViewHolder> {
     static class ItemViewHolder extends RecyclerView.ViewHolder {
 
         TextView itemText;
+        TextView dishType;
         TextView itemNumber;
         View delete;
 
@@ -103,6 +104,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ItemViewHolder> {
             super(itemView);
 
             itemText = itemView.findViewById(R.id.itemText);
+            dishType = itemView.findViewById(R.id.dishType);
             itemNumber = itemView.findViewById(R.id.itemNumber);
             delete = itemView.findViewById(R.id.delete);
 
@@ -125,6 +127,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ItemViewHolder> {
             this.item = item;
 
             itemText.setText(item.text);
+            dishType.setText(item.dishType);
             itemNumber.setText(String.valueOf(item.quantity));
         }
     }
